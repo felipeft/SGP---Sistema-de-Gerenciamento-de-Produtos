@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package proto;
+
+// Definição da entidade Produto
+message Produto {
+    int32 id = 1;
+    string nome = 2;
+    float preco = 3;
+    string categoria = 4;
+    int32 estoque = 5;
+}
+
+// Definição dos argumentos para operações específicas
+message AdicionarProdutoArgs {
+    Produto produto = 1;
+}
+
+message ListarProdutosArgs {}
+
+message EditarProdutoArgs {
+    int32 id = 1;
+    string nome = 2;
+    float preco = 3;
+    string categoria = 4;
+    int32 estoque = 5;
+}
+
+message RemoverProdutoArgs {
+    int32 id = 1;
+}
+
+// Mensagens de resposta para operações específicas
+message GenericResponse {
+    int32 codigo = 1;   // Código de status: 200 para sucesso, 400 para erro, etc.
+    string mensagem = 2;
+}
+
+message ListarProdutosResponse {
+    repeated Produto produtos = 1;
+}
+
+// Definição da requisição para adicionar um produto
+message AddProductRequest {
+    string nome = 1;
+    float preco = 2;
+}
+
+message AddProductResponse {
+    int32 codigo = 1;
+    string mensagem = 2;
+}
+
+// Mensagens para listagem de produtos
+message ListAllProductResponse {
+    repeated Produto produtos = 1;
+}
+
+// Definição da mensagem genérica para comunicação
+message Message {
+    int32 type = 1;             // 1: Requisição, 2: Resposta
+    int32 id = 2;               // Identificador da mensagem
+    string obfReference = 3;    // Referência ao objeto ou serviço
+    string methodId = 4;        // Identificador do método a ser invocado
+    bytes arguments = 5;        // Argumentos serializados da operação
+}
